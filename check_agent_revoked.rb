@@ -28,19 +28,7 @@ end
 puts certs_serials
 
 crl.revoked.each do | revoked |
-  puts revoked.serial.to_s
-  puts "Cert #{certs_serials[revoked.serial.to_s]} serial #{revoked.serial} is revoked."
+  if certs_serials[revoked.serial.to_s]
+    puts "Cert #{certs_serials[revoked.serial.to_s]} serial #{revoked.serial} is revoked."
+  end
 end
-
-puts certs_serials['452']
-
-# Dir.glob(certificate_directory) do | next_cert | 
-#     cert_data = File.open next_cert
-#     certificate = OpenSSL::X509::Certificate.new cert_data
-
-#     expiry = certificate.not_after
-#     if expiry <= desired_time
-#         puts "Certificate #{certificate.subject} expires at #{certificate.not_after}"
-#     end
-
-# end
