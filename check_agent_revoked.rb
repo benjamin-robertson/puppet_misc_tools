@@ -15,6 +15,17 @@ crl = OpenSSL::X509::CRL.new crl_data
 
 puts "crl revoked is #{crl.revoked}"
 
+certs_serials = {}
+
+# Get serial number and subject
+Dir.glob(certificate_directory) do | next_cert | 
+  cert_data = File.open next_cert
+  certificate = OpenSSL::X509::Certificate.new cert_data
+  puts "serial #{certificate.serial} subject #{certificate.subject}"
+  # certs_serials[]
+end
+
+
 crl.revoked.each do | revoked |
   puts revoked
 end
