@@ -21,13 +21,14 @@ certs_serials = {}
 Dir.glob(certificate_directory) do | next_cert | 
   cert_data = File.open next_cert
   certificate = OpenSSL::X509::Certificate.new cert_data
-  puts "serial #{certificate.serial} subject #{certificate.subject}"
-  # certs_serials[]
+  # puts "serial #{certificate.serial} subject #{certificate.subject}"
+  certs_serials[:certificate.serial] = certificate.subject
 end
 
 
 crl.revoked.each do | revoked |
-  puts revoked.serial
+  puts "Cert #{certs_serials[revoked.serial]} serial #{revoked.serial} is revoked."
+  #revoked.serial
 end
 
 # Dir.glob(certificate_directory) do | next_cert | 
