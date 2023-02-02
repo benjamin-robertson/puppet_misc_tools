@@ -28,7 +28,7 @@ end
 puts certs_serials
 
 crl.revoked.each do | revoked |
-  puts revoked.to_s
+  puts revoked.serial.to_s
   puts "Cert #{certs_serials[revoked.serial.to_s]} serial #{revoked.serial} is revoked."
 end
 
