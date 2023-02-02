@@ -22,7 +22,7 @@ Dir.glob(certificate_directory) do | next_cert |
   cert_data = File.open next_cert
   certificate = OpenSSL::X509::Certificate.new cert_data
   puts "serial #{certificate.serial} subject #{certificate.subject}"
-  certs_serials[certificate.serial] = certificate.subject
+  certs_serials[certificate.serial.to_s] = certificate.subject.to_s
 end
 
 puts certs_serials
