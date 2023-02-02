@@ -26,7 +26,7 @@ Dir.glob(certificate_directory) do | next_cert |
 end
 
 
-crl.revoked.each do | revoked |
+crl.revoked.serial.each do | revoked |
   puts revoked
 end
 
