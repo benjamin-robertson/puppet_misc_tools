@@ -13,7 +13,7 @@ puts '-----------------------------------------------------'
 crl_data = File.open crl_location
 crl = OpenSSL::X509::CRL.new crl_data
 
-puts "crl revoked is #{crl.revoked}"
+# puts "crl revoked is #{crl.revoked}"
 
 certs_serials = {}
 
@@ -22,9 +22,10 @@ Dir.glob(certificate_directory) do | next_cert |
   cert_data = File.open next_cert
   certificate = OpenSSL::X509::Certificate.new cert_data
   # puts "serial #{certificate.serial} subject #{certificate.subject}"
-  certs_serials[:certificate.serial] = certificate.subject
+  certs_serials[certificate.serial] = certificate.subject
 end
 
+puts certs_serials
 
 crl.revoked.each do | revoked |
   puts "Cert #{certs_serials[revoked.serial]} serial #{revoked.serial} is revoked."
