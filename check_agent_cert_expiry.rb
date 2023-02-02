@@ -18,7 +18,8 @@ rescue => exception
    exit 
 end
 
-puts "Checking for certs expiring in the next #{days}."
+puts "Checking for certs expiring in the next #{days} days."
+puts '-----------------------------------------------------'
 
 current_time = Time.now
 desired_time = current_time + ((60 * 60 * 24) * days)
