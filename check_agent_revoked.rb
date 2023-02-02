@@ -15,6 +15,10 @@ crl = OpenSSL::X509::CRL.new crl_data
 
 puts "crl revoked is #{crl.revoked}"
 
+crl.revoked.each do | revoked |
+  puts revoked
+end
+
 # Dir.glob(certificate_directory) do | next_cert | 
 #     cert_data = File.open next_cert
 #     certificate = OpenSSL::X509::Certificate.new cert_data
