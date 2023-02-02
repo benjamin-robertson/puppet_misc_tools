@@ -32,6 +32,8 @@ crl.revoked.each do | revoked |
   puts "Cert #{certs_serials[revoked.serial.to_s]} serial #{revoked.serial} is revoked."
 end
 
+puts certs_serials['452']
+
 # Dir.glob(certificate_directory) do | next_cert | 
 #     cert_data = File.open next_cert
 #     certificate = OpenSSL::X509::Certificate.new cert_data
