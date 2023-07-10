@@ -1,0 +1,18 @@
+{
+    "description": "Check disk space on Windows and Linux systems. Returns 0 if freespace_req is avalible on disk.",
+    "input_method": "environment",
+    "implementations": [
+        {"name": "check_disk_space.rb", "requirements": ["shell"]},
+        {"name": "check_disk_space.ps1", "requirements": ["powershell"]}
+    ],
+    "parameters": {
+        "freespace_req": {
+            "description": "Amount of free space required",
+            "type": "Integer"
+        },
+        "disk": {
+            "description": "Disk to check.",
+            "type": "String"
+        }
+    }
+}
