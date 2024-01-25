@@ -1,4 +1,4 @@
-#!/usr/bin/ruby
+#!/usr/bin/ruby 
 #/opt/puppetlabs/puppet/bin/ruby
 #
 # Autosign script for Puppet Server. 
@@ -16,13 +16,13 @@ valid_environments = ['dev','prd']
 valid_departments = ['HR','ben']
 
 # Confirm two arguments have been passed
-if ARGV.length != 2
-  STDERR.puts "autosign.rb MUST be run with two arguments. Certname and pem encoded CSR"
+if ARGV.length != 1
+  STDERR.puts "autosign.rb MUST be run with one arguments. Certname"
   exit 1
 end
 
 certname=ARGV[0]
-certificate=ARGV[1]
+certificate=STDIN.read
 
 # set all known trusted facts
 trusted_facts_oid = { 'pp_uuid' => '1.3.6.1.4.1.34380.1.1.1', 'pp_instance_id' => '1.3.6.1.4.1.34380.1.1.2', 'pp_image_name' => '1.3.6.1.4.1.34380.1.1.3', 'pp_preshared_key' => '1.3.6.1.4.1.34380.1.1.4', 'pp_cost_center' => '1.3.6.1.4.1.34380.1.1.5', 'pp_product' => '1.3.6.1.4.1.34380.1.1.6', 'pp_project' => '1.3.6.1.4.1.34380.1.1.7', 'pp_application' => '1.3.6.1.4.1.34380.1.1.8', 'pp_service' => '1.3.6.1.4.1.34380.1.1.9', 'pp_employee' => '1.3.6.1.4.1.34380.1.1.10', 'pp_created_by' => '1.3.6.1.4.1.34380.1.1.11', 'pp_environment' => '1.3.6.1.4.1.34380.1.1.12', 'pp_role' => '1.3.6.1.4.1.34380.1.1.13', 'pp_software_version' => '1.3.6.1.4.1.34380.1.1.14', 'pp_department' => '1.3.6.1.4.1.34380.1.1.15', 'pp_cluster' => '1.3.6.1.4.1.34380.1.1.16', 'pp_provisioner' => '1.3.6.1.4.1.34380.1.1.17', 'pp_region' => '1.3.6.1.4.1.34380.1.1.18', 'pp_datacenter' => '1.3.6.1.4.1.34380.1.1.19', 'pp_zone' => '1.3.6.1.4.1.34380.1.1.20', 'pp_network' => '1.3.6.1.4.1.34380.1.1.21', 'pp_securitypolicy' => '1.3.6.1.4.1.34380.1.1.22', 'pp_cloudplatform' => '1.3.6.1.4.1.34380.1.1.23', 'pp_apptier' => '1.3.6.1.4.1.34380.1.1.24', 'pp_hostname' => '1.3.6.1.4.1.34380.1.1.25' }
@@ -87,3 +87,6 @@ check_role_regex(valid_role_regex, trusted_facts, trusted_facts_oid)
 check_provisioners(valid_provisioners, trusted_facts, trusted_facts_oid)
 check_environments(valid_environments, trusted_facts, trusted_facts_oid)
 check_departments(valid_departments, trusted_facts, trusted_facts_oid)
+
+STDOUT.write "Autosign passed for #{certname}, trusted facts were #{trusted_facts}"
+exit 0
