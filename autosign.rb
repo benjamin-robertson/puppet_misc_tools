@@ -11,7 +11,7 @@ require 'openssl'
 
 # Set valid values for facts. Each facts must match these value for autosigning to occur.
 valid_datacenters = ['dc1','dc2']
-valid_role_regex = '^role\:\:*'
+valid_role_regex = '^role\:\:'
 valid_provisioners = ['manual','legacy']
 valid_environments = ['dev','prd']
 valid_departments = ['HR','ben']
@@ -37,7 +37,7 @@ def check_datacentre(valid_datacenters, trusted_facts, trusted_facts_oid)
 end
 
 def check_role_regex(valid_role_regex, trusted_facts, trusted_facts_oid)
-  unless trusted_facts[trusted_facts_oid['pp_role']].match(/#{valid_role_regex}/)
+  unless trusted_facts[trusted_facts_oid['pp_role']].match?(/#{valid_role_regex}/)
     STDERR.puts "Role fact not matching role regex."
     exit 1
   end
