@@ -1,5 +1,7 @@
 #!/opt/puppetlabs/puppet/bin/ruby
 #
+# Original @ https://github.com/benjamin-robertson/puppet_misc_tools/blob/main/autosign.rb
+#
 # Autosign script for Puppet Server. Follow guide on https://www.puppet.com/docs/puppet/7/ssl_autosign#ssl_policy_based_autosigning for how to setup this script
 # Ensure the script has execute permissions for the puppet server.
 # Returns 0 if approved. Returns 1 if not approved. Not approved hosts will show as a pending request on Puppet CA.
