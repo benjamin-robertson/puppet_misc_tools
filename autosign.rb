@@ -1,8 +1,8 @@
-#!/usr/bin/ruby 
-#/opt/puppetlabs/puppet/bin/ruby
+#!/opt/puppetlabs/puppet/bin/ruby
 #
 # Autosign script for Puppet Server. Follow guide on https://www.puppet.com/docs/puppet/7/ssl_autosign#ssl_policy_based_autosigning for how to setup this script
-# Ensure the
+# Ensure the script has execute permissions for the puppet server.
+# Returns 0 if approved. Returns 1 if not approved. Not approved hosts will show as a pending request on Puppet CA.
 #
 # I've made the decision to strip any non (A-z,0-9,/,-,_,:) characters from the output of the trusted extension. 
 # Openssl has been known to return weird characters from certificate attributes. See https://github.com/GeoffWilliams/puppet-safe_roles/issues/12
