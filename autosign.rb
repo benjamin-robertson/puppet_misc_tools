@@ -1,21 +1,21 @@
 #!/usr/bin/ruby 
 #/opt/puppetlabs/puppet/bin/ruby
 #
-# Autosign script for Puppet Server. 
+# Autosign script for Puppet Server. Follow guide on https://www.puppet.com/docs/puppet/7/ssl_autosign#ssl_policy_based_autosigning for how to setup this script
 #
 # I've made the decision to strip any non (A-z,0-9,/,-,_,:) characters from the output of the trusted extension. 
 # Openssl has been known to return weird characters from certificate attributes. See https://github.com/GeoffWilliams/puppet-safe_roles/issues/12
 #
 require 'openssl'
 
-# Set valid values for facts. Each fact must match these value for autosigning to occur.
+# Set valid values for facts. Each facts must match these value for autosigning to occur.
 valid_datacenters = ['dc1','dc2']
 valid_role_regex = '^role::*'
 valid_provisioners = ['manual','legacy']
 valid_environments = ['dev','prd']
 valid_departments = ['HR','ben']
 
-# Confirm two arguments have been passed
+# Confirm certname argument have been passed
 if ARGV.length != 1
   STDERR.puts "autosign.rb MUST be run with one arguments. Certname"
   exit 1
@@ -76,8 +76,6 @@ def get_extension_requests(certificate)
       trusted_facts[value[0].value.strip] = value[1].value.strip.gsub(/[^a-zA-Z\d\/\:_-]/, '')
     end
   end
-    
-  puts trusted_facts
   trusted_facts
 end
 
@@ -88,5 +86,5 @@ check_provisioners(valid_provisioners, trusted_facts, trusted_facts_oid)
 check_environments(valid_environments, trusted_facts, trusted_facts_oid)
 check_departments(valid_departments, trusted_facts, trusted_facts_oid)
 
-STDOUT.write "Autosign passed for #{certname}, trusted facts were #{trusted_facts}"
+STDOUT.write "Autosign passed for #{certname}, trusted facts were #{trusted_facts}" # This can be changed to a STDOUT output. However output will not show in puppetserver.log unless its logged to stderr.
 exit 0
