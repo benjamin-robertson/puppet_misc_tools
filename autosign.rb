@@ -18,6 +18,7 @@ valid_provisioners = ['manual','legacy']
 valid_environments = ['dev','prd']
 valid_departments = ['HR','ben']
 valid_apptiers = ['tier0','tier1']
+valid_certnames_regex = ['^\w+-\w+-de', '^\w+-\w+-te'] # this check the actual certname/hostname against these regex. Must match at least one.
 
 # Confirm certname argument have been passed
 if ARGV.length != 1
@@ -76,6 +77,16 @@ def check_apptier(valid_apptiers, trusted_facts, trusted_facts_oid)
   end
 end
 
+def check_certname(valid_certnames_regex, certname)
+  valid_certnames_regex.each do | regex |
+    if certname.match?(/#{regex}/)
+      return
+    end
+  end
+  STDERR.puts "Certname not set correctly."
+  exit 1
+end
+
 def get_extension_requests(certificate)
   csr=OpenSSL::X509::Request.new certificate
 
@@ -100,6 +111,7 @@ check_provisioners(valid_provisioners, trusted_facts, trusted_facts_oid)
 check_environments(valid_environments, trusted_facts, trusted_facts_oid)
 check_departments(valid_departments, trusted_facts, trusted_facts_oid)
 check_apptier(valid_apptiers, trusted_facts, trusted_facts_oid)
+check_certname(valid_certnames_regex, certname)
 
 STDERR.write "Autosign passed for #{certname}, trusted facts were #{trusted_facts}" # This can be changed to a STDOUT output. However output will not show in puppetserver.log unless its logged to stderr.
 exit 0
