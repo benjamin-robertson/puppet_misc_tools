@@ -15,7 +15,7 @@ done
 
 if [[ $loop -eq true ]]
 then
-    for doge in {1..5}
+    for doge in {1..$count}
     do
         echo $doge
     done
