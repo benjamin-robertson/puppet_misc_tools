@@ -93,3 +93,11 @@ echo $nameserver
 } || {
     echo "does not match 10.9.0.2"
 }
+
+louie='dog'
+test='192.186.0.1'
+echo $louie
+if [ $test == '192.186.0.1' ] && [ $louie == 'dog' ]; then
+    echo "trues"
+fi
+
