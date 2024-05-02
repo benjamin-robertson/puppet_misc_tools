@@ -65,3 +65,25 @@ then
         echo "File $file does not exist"
     fi
 fi
+
+# Get name servers
+echo $((5+6))
+# make new line separator
+IFS=$'\n'
+for doge in `cat /etc/resolv.conf`
+do
+    re='^nameserver.*'
+    if [[ $doge =~ $re ]]; then
+        ns=`echo $doge | awk '{print $2}'`
+        echo "nameserver is $ns"
+    fi
+done
+
+nameserver=`cat /etc/resolv.conf | grep -E '^nameserver.*'`
+echo $nameserver
+
+[ $ns == '192.168.0.1' ] && {
+    echo "matches 192.168.0.1"
+} || {
+    echo "does not match 192.168.0.1"
+}
