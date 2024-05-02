@@ -87,3 +87,9 @@ echo $nameserver
 } || {
     echo "does not match 192.168.0.1"
 }
+
+[ `cat /etc/resolv.conf | grep '10.9.0.2'` ] && {
+    echo "matches 10.9.0.2"
+} || {
+    echo "does not match 10.9.0.2"
+}
